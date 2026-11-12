@@ -9,13 +9,13 @@
 <style>
 /* Layout: one centered column set like the printed lineup sheet; letterspaced caps for names, hairlines between courses, everything else quiet. */
 :root{
-  --bg:#ffffff; --ink:#141412; --muted:#6a6a64; --line:#deded8; --wash:#f5f5f1; --leaf:#34503f; --good:#2f6b46; --bad:#a23a2e;
+  --bg:#ffffff; --ink:#141412; --muted:#6a6a64; --line:#deded8; --wash:#f5f5f1; --leaf:#34503f; --good:#2f6b46; --bad:#a23a2e; --a0:#edf1e6;--a1:#e4eff1;--a2:#f7ebe2;--a3:#f6eed6;--a4:#f3e5ea;--a5:#ece8f5;--a0c:#4a6a38;--a1c:#2c6d78;--a2c:#a05636;--a3c:#86661a;--a4c:#7c3350;--a5c:#5d4889;
   --display:"Cormorant Garamond","Iowan Old Style","Palatino Linotype",Georgia,serif;
   --body:"EB Garamond","Iowan Old Style",Georgia,serif;
   --label:"Jost","Avenir Next","Helvetica Neue",Arial,sans-serif;
 }
-@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --bg:#101110; --ink:#f1f0ea; --muted:#a3a39b; --line:#2c2d2a; --wash:#191a18; --leaf:#9db8a4; --good:#7fc496; --bad:#e58b7e; color-scheme:dark } }
-:root[data-theme="dark"]{ --bg:#101110; --ink:#f1f0ea; --muted:#a3a39b; --line:#2c2d2a; --wash:#191a18; --leaf:#9db8a4; --good:#7fc496; --bad:#e58b7e; color-scheme:dark }
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --bg:#101110; --ink:#f1f0ea; --muted:#a3a39b; --line:#2c2d2a; --wash:#191a18; --leaf:#9db8a4; --good:#7fc496; --bad:#e58b7e; --a0:#161c13;--a1:#111b1e;--a2:#201812;--a3:#1f1a0e;--a4:#201319;--a5:#181520;--a0c:#a9c59a;--a1c:#8fc7d1;--a2c:#e0a385;--a3c:#d9bd72;--a4c:#d99ab0;--a5c:#b7a6e0; color-scheme:dark } }
+:root[data-theme="dark"]{ --bg:#101110; --ink:#f1f0ea; --muted:#a3a39b; --line:#2c2d2a; --wash:#191a18; --leaf:#9db8a4; --good:#7fc496; --bad:#e58b7e; --a0:#161c13;--a1:#111b1e;--a2:#201812;--a3:#1f1a0e;--a4:#201319;--a5:#181520;--a0c:#a9c59a;--a1c:#8fc7d1;--a2c:#e0a385;--a3c:#d9bd72;--a4c:#d99ab0;--a5c:#b7a6e0; color-scheme:dark }
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:18px;line-height:1.5;-webkit-text-size-adjust:100%}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
@@ -138,6 +138,11 @@ table.mx{border-collapse:collapse;font-family:var(--label);font-size:12px}
 .safe p{margin:0}
 .safe b{font-family:var(--label);font-weight:500;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-right:8px}
 .safe .no{color:var(--bad)}
+.actsec{background:var(--tint);box-shadow:0 0 0 100vmax var(--tint);clip-path:inset(0 -100vmax);padding-bottom:30px}
+.actsec .act .lab{color:var(--acc);font-weight:500}
+.actsec details.dish,.actsec .wine{border-color:color-mix(in srgb,var(--acc) 22%,transparent)}
+.actsec textarea{background:var(--bg)}
+#jump button{border-color:var(--acc);color:var(--acc)}
 .phmsg{font-family:var(--label);font-size:12px;color:var(--muted)}
 .vh{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
 .count{font-family:var(--label);font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;text-align:center;margin:12px 0}
@@ -372,10 +377,10 @@ const miseIcons=d=>`<div class="mise" role="img" aria-label="Mise: ${esc(miseTex
 function termRows(keys){return keys.map(k=>{const g=G[k];return `<div class="say-row">${sayBtn(g.t,g.l,g.a)}<span class="w">${esc(g.t)}</span><span class="phon">${esc(g.p)}</span><span class="mean">${esc(g.m)}</span></div>`}).join('')}
 function pairLines(d){const a=ACTS[d.act];if(!d.pair)return '<dd>No pour listed with this bite.</dd>';
   return `<dd><b>Std</b> ${esc(W[a.std].short)} <span class="phon">${GLASS[W[a.std].g]}</span><br><b>Res</b> ${esc(W[a.res].short)} <span class="phon">${GLASS[W[a.res].g]}</span><br><b>N/A</b> ${d.noNA?'None listed for this dish.':esc(a.na)}</dd>`}
-function renderMenu(){let h=`<div class="tools"><input type="search" id="q" placeholder="Search dishes, allergens, wines" aria-label="Search the menu" autocomplete="off"><p class="count" id="qcount" hidden></p><div class="seg" id="jump"><span class="lab">Jump to act</span>${ACTS.map((a,i)=>`<button data-jump="${i}" aria-label="Act ${a.n}, ${esc(a.t)}">${a.n}</button>`).join('')}</div></div>
+function renderMenu(){let h=`<div class="tools"><input type="search" id="q" placeholder="Search dishes, allergens, wines" aria-label="Search the menu" autocomplete="off"><p class="count" id="qcount" hidden></p><div class="seg" id="jump"><span class="lab">Jump to act</span>${ACTS.map((a,i)=>`<button data-jump="${i}" style="--acc:var(--a${i}c)" aria-label="Act ${a.n}, ${esc(a.t)}">${a.n}</button>`).join('')}</div></div>
   <details class="conf"><summary><span data-conf></span></summary><p class="note" style="text-align:center;margin:0 0 14px">Everything starts as a draft. Mark a dish or wine confirmed once the kitchen or sommelier team agrees, and tick these questions off as you get answers.</p><div class="opts">${QS.map(q=>`<button class="opt" data-ver="${q[0]}" aria-pressed="false"><span>${esc(q[1])}</span><span class="tag">Open</span></button>`).join('')}</div></details>`;
   ACTS.forEach((a,i)=>{
-    h+=`<section id="act-${i}"><div class="act"><p class="lab">Act ${a.n}</p><h2 class="caps">${esc(a.t)}</h2><p class="pour">${esc(a.pour)}</p><div class="bottles"><figure><img src="img/w-${a.std}.jpg" alt="${esc(W[a.std].short)}"><figcaption class="cap">Std · ${esc(W[a.std].short)}</figcaption></figure><figure><img src="img/w-${a.res}.jpg" alt="${esc(W[a.res].short)}"><figcaption class="cap">Res · ${esc(W[a.res].short)}</figcaption></figure></div></div>`;
+    h+=`<section id="act-${i}" class="actsec" style="--tint:var(--a${i});--acc:var(--a${i}c)"><div class="act"><p class="lab">Act ${a.n}</p><h2 class="caps">${esc(a.t)}</h2><p class="pour">${esc(a.pour)}</p><div class="bottles"><figure><img src="img/w-${a.std}.jpg" alt="${esc(W[a.std].short)}"><figcaption class="cap">Std · ${esc(W[a.std].short)}</figcaption></figure><figure><img src="img/w-${a.res}.jpg" alt="${esc(W[a.res].short)}"><figcaption class="cap">Res · ${esc(W[a.res].short)}</figcaption></figure></div></div>`;
     D.filter(d=>d.act===i).forEach(d=>{
       if(d.grp)h+=`<p class="group lab">${esc(d.grp)}</p>`;
       h+=`<details class="dish" id="d-${d.id}" data-s="${esc([d.n,d.grp||'',a.t,d.al.join(' '),miseText(d),d.terms.map(k=>G[k].t).join(' '),d.pair?W[a.std].n+' '+W[a.res].n+' '+a.na:''].join(' ').toLowerCase())}"><summary><span class="thumb" data-th="${d.id}"></span><h3 class="caps">${esc(d.n)}</h3>${miseIcons(d)}<span class="vb" data-vb="${d.id}">Draft</span></summary><div class="body">
@@ -398,7 +403,7 @@ function renderMenu(){let h=`<div class="tools"><input type="search" id="q" plac
 /* ---------- pairings ---------- */
 function wineBlock(tier,k){const w=W[k];return `<div class="wine"><span class="lab">${tier} · ${esc(GLASS[w.g])}</span><h4>${esc(w.n)}</h4><div class="say-row">${sayBtn(w.short,w.l,w.a,w.short)}<span class="phon">${esc(w.p)}</span></div><div class="photo" data-ph="w-${k}" data-label="${esc(w.short)}"></div><p>${esc(w.what)}</p><p><i>${esc(w.why)}</i></p><div class="row">${verBtn('w-'+k)}<span class="note">Once the sommelier team has confirmed the bottle, vintage and pronunciation.</span></div></div>`}
 function renderPairings(){let h=`<div class="view-head"><p class="lab">Six pours</p><h2 class="caps">The Pairing</h2><p>Sparkling, crisp white, rich white, light red, bold red, sweet. Each pour is a little heavier than the last, matching the food as it grows richer.</p></div>`;
-  ACTS.forEach((a,i)=>{h+=`<section><div class="act"><p class="lab">Act ${a.n}</p><h2 class="caps">${esc(a.t)}</h2><p class="pour">${D.filter(d=>d.act===i&&d.pair).map(d=>esc(d.n.split(' with ')[0])).join(' · ')}</p></div>
+  ACTS.forEach((a,i)=>{h+=`<section class="actsec" style="--tint:var(--a${i});--acc:var(--a${i}c)"><div class="act"><p class="lab">Act ${a.n}</p><h2 class="caps">${esc(a.t)}</h2><p class="pour">${D.filter(d=>d.act===i&&d.pair).map(d=>esc(d.n.split(' with ')[0])).join(' · ')}</p></div>
     ${wineBlock('Standard',a.std)}${wineBlock('Reserve',a.res)}
     <div class="wine"><span class="lab">Non-alcoholic</span><h4>${esc(a.na)}</h4><p><i>${esc(a.naNote)}</i></p></div></section>`});
   h+=`<section><div class="act"><p class="lab">In the non-alcoholic pours</p><h2 class="caps">Teas and Herbs</h2></div><div class="wine">${strip(['shiso','sencha','genmaicha','juniper_berries'])}</div></section>
