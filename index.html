@@ -1,0 +1,540 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Fall Menu Study</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Jost:wght@400;500&display=swap">
+<style>
+/* Layout: one centered column set like the printed lineup sheet; letterspaced caps for names, hairlines between courses, everything else quiet. */
+:root{
+  --bg:#ffffff; --ink:#141412; --muted:#6a6a64; --line:#deded8; --wash:#f5f5f1; --leaf:#34503f; --good:#2f6b46; --bad:#a23a2e;
+  --display:"Cormorant Garamond","Iowan Old Style","Palatino Linotype",Georgia,serif;
+  --body:"EB Garamond","Iowan Old Style",Georgia,serif;
+  --label:"Jost","Avenir Next","Helvetica Neue",Arial,sans-serif;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --bg:#101110; --ink:#f1f0ea; --muted:#a3a39b; --line:#2c2d2a; --wash:#191a18; --leaf:#9db8a4; --good:#7fc496; --bad:#e58b7e; color-scheme:dark } }
+:root[data-theme="dark"]{ --bg:#101110; --ink:#f1f0ea; --muted:#a3a39b; --line:#2c2d2a; --wash:#191a18; --leaf:#9db8a4; --good:#7fc496; --bad:#e58b7e; color-scheme:dark }
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:18px;line-height:1.5;-webkit-text-size-adjust:100%}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:660px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+button:focus-visible,summary:focus-visible,textarea:focus-visible,a:focus-visible{outline:2px solid var(--leaf);outline-offset:3px}
+.lab{font-family:var(--label);font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+.caps{font-family:var(--display);font-weight:600;letter-spacing:.14em;text-transform:uppercase;text-wrap:balance}
+header.top{text-align:center;padding-block:34px 18px}
+header.top h1{margin:0;font-size:30px;line-height:1.15}
+header.top p{margin:8px 0 0}
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--bg);border-block:1px solid var(--line)}
+nav .wrap{display:flex;justify-content:space-between;gap:4px;overflow-x:auto}
+nav button{font-family:var(--label);font-size:11px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);padding:15px 4px 13px;border-bottom:2px solid transparent;white-space:nowrap}
+nav button[aria-current="page"]{color:var(--ink);border-bottom-color:var(--ink)}
+main{padding-block:8px 80px}
+.act{text-align:center;padding-block:38px 6px}
+.act h2{margin:6px 0 0;font-size:25px}
+.act .pour{margin:10px auto 0;max-width:34em;color:var(--muted);font-style:italic;font-size:16.5px}
+.group{text-align:center;margin:26px 0 0}
+details.dish{border-bottom:1px solid var(--line)}
+details.dish summary{list-style:none;cursor:pointer;text-align:center;padding:20px 8px 18px;position:relative}
+details.dish summary::-webkit-details-marker{display:none}
+details.dish h3::after{content:"+";display:inline-block;margin-left:10px;font-family:var(--label);font-weight:400;font-size:20px;line-height:1;letter-spacing:0;color:var(--muted);vertical-align:-1px}
+details.dish[open] h3::after{content:"\2212"}
+details.dish h3{margin:0;font-size:19px;line-height:1.3}
+details.dish .sub{margin:5px 0 0;font-size:15.5px;color:var(--muted);font-style:italic}
+.body{padding:2px 0 26px;display:grid;gap:20px}
+.body p{margin:0}
+.sec{display:grid;gap:8px}
+.say-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.say-row .w{font-weight:500}
+.phon{font-family:var(--label);font-size:13.5px;letter-spacing:.04em;color:var(--leaf)}
+.mean{flex-basis:100%;color:var(--muted);font-size:16.5px;margin-left:46px}
+.no-audio .mean{margin-left:0}
+button.say{flex:none;width:34px;height:34px;border:1px solid var(--line);border-radius:50%;display:grid;place-items:center;color:var(--ink)}
+button.say svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+button.say:active{background:var(--wash)}
+.no-audio button.say{display:none}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-family:var(--label);font-size:12.5px;letter-spacing:.03em;border:1px solid var(--line);padding:4px 10px;border-radius:99px}
+.kv{display:grid;grid-template-columns:5.2em 1fr;gap:4px 12px;font-size:17px}
+.kv dt{font-family:var(--label);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);padding-top:6px}
+.kv dd{margin:0;min-width:0}
+textarea{width:100%;min-height:8.2em;font:inherit;color:var(--ink);background:var(--wash);border:1px solid var(--line);border-radius:2px;padding:12px 14px;resize:vertical;line-height:1.5}
+.row{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.btn{font-family:var(--label);font-size:11px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;border:1px solid var(--ink);padding:11px 16px;border-radius:2px}
+.btn.quiet{border-color:var(--line);color:var(--muted)}
+.btn.solid{background:var(--ink);color:var(--bg)}
+.note{font-size:15.5px;color:var(--muted);font-style:italic}
+.status{font-family:var(--label);font-size:12px;color:var(--muted)}
+.view-head{text-align:center;padding-block:34px 14px}
+.view-head h2{margin:6px 0 8px;font-size:25px}
+.view-head p{margin:0 auto;max-width:32em;color:var(--muted);font-size:16.5px}
+.seg{display:flex;justify-content:center;flex-wrap:wrap;gap:6px;margin:14px 0 20px}
+.seg button{font-family:var(--label);font-size:11px;letter-spacing:.14em;text-transform:uppercase;border:1px solid var(--line);padding:9px 13px;border-radius:99px;color:var(--muted)}
+.seg button[aria-pressed="true"]{border-color:var(--ink);color:var(--ink)}
+.wine{border-top:1px solid var(--line);padding-block:18px;display:grid;gap:8px}
+.wine h4{margin:0;font-family:var(--body);font-weight:500;font-size:19px;line-height:1.35}
+.wine p{margin:0;font-size:17px}
+.card{width:100%;min-height:300px;border:1px solid var(--ink);border-radius:2px;padding:28px 22px;display:grid;place-content:center;gap:12px;text-align:center}
+.card .front{font-size:23px;line-height:1.3}
+.card .back{font-size:17.5px;text-align:left;display:grid;gap:8px}
+.card .back b{font-family:var(--label);font-weight:500;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);display:block}
+.photo{display:grid;gap:10px}
+.photo:empty{display:none}
+.photo img{display:block;width:100%;max-height:420px;object-fit:cover;border-radius:2px;background:var(--wash)}
+.card img{display:block;max-width:100%;max-height:220px;margin:0 auto;object-fit:cover;border-radius:2px}
+.strip{display:flex;gap:12px;overflow-x:auto;padding-bottom:4px}
+.strip figure{margin:0;flex:none;width:132px}
+.strip img{display:block;width:132px;height:132px;object-fit:cover;border-radius:2px;background:var(--wash)}
+.strip figcaption,.cap{font-family:var(--label);font-size:11.5px;letter-spacing:.04em;color:var(--muted);margin-top:6px}
+.room{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;padding-block:18px}
+.room figure{margin:0}
+.room img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:2px}
+.thumb{display:block;margin:0 auto 12px}
+.thumb:empty{display:none}
+.thumb img{display:block;margin:0 auto;width:84px;height:84px;border-radius:50%;object-fit:cover;background:var(--wash)}
+.bottles{display:flex;justify-content:center;gap:26px;margin-top:18px}
+.bottles figure{margin:0;width:128px}
+.bottles img{display:block;width:100%;height:180px;object-fit:contain;background:#fff;border-radius:2px}
+.mise{display:flex;justify-content:center;align-items:flex-end;flex-wrap:wrap;gap:6px 18px;margin-top:12px}
+.mise span{display:grid;justify-items:center;gap:5px;font-family:var(--label);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.mise svg{display:block;color:var(--ink);fill:none;stroke:var(--ink);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.tools{display:grid;gap:10px;padding-block:20px 4px}
+#q{width:100%;font:inherit;font-size:17px;padding:11px 14px;border:1px solid var(--line);border-radius:2px;background:var(--bg);color:var(--ink)}
+#jump{margin:0;align-items:center}
+#jump button{min-width:44px}
+section{scroll-margin-top:60px}
+.searching .act,.searching .group,.searching .roomsec,.searching #jump,.searching .conf{display:none}
+.conf{border-bottom:1px solid var(--line)}
+.conf summary{list-style:none;cursor:pointer;text-align:center;padding:14px 0;font-family:var(--label);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.conf summary::-webkit-details-marker{display:none}
+.conf summary::after{content:" +"}
+.conf[open] summary::after{content:" \2212"}
+.conf .opts{padding-bottom:20px}
+.vb{display:block;margin-top:12px;font-family:var(--label);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.vb.on{color:var(--good)}
+.vbtn[aria-pressed="true"]{background:var(--good);border-color:var(--good);color:var(--bg)}
+.opt[aria-pressed="true"] .tag{color:var(--good)}
+.prog{font-family:var(--label);font-size:12px;letter-spacing:.06em;color:var(--muted);text-align:center;font-variant-numeric:tabular-nums;margin:0 0 6px}
+.say-list{max-width:21em;margin:4px auto 26px;padding-left:1.3em;display:grid;gap:8px;font-size:18.5px}
+.guest{text-align:center;color:var(--muted);font-style:italic;font-size:16.5px;margin:0 0 6px}
+.mx-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:2px}
+table.mx{border-collapse:collapse;font-family:var(--label);font-size:12px}
+.mx tr{border-top:1px solid var(--line)}
+.mx thead tr{border-top:0}
+.mx th.col{vertical-align:bottom;padding:0;font-weight:400;border-left:1px solid var(--line)}
+.mx th.col button{writing-mode:vertical-rl;transform:rotate(180deg);height:112px;padding:8px 6px;font-family:var(--label);font-size:11.5px;letter-spacing:.05em;white-space:nowrap;text-align:left;color:var(--muted)}
+.mx th.col button[aria-pressed="true"]{color:var(--bad);font-weight:500}
+.mx th.rowh{position:sticky;left:0;z-index:1;background:var(--bg);text-align:left;font-weight:400;font-family:var(--body);font-size:14.5px;line-height:1.2;padding:7px 8px 7px 8px;min-width:112px;max-width:120px;border-right:1px solid var(--line)}
+.mx td{width:29px;min-width:29px;height:34px;text-align:center;border-left:1px solid var(--line)}
+.mx td.on::after{content:"";display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--ink);vertical-align:middle}
+.mx .sel{background:var(--wash)}
+.mx tr.hit th.rowh{color:var(--bad);text-decoration:line-through}
+.mx tr.hit td.on.sel::after{background:var(--bad)}
+.mx tr.acth th.rowh{background:var(--wash);font-family:var(--label);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.mx tr.acth td{background:var(--wash);border-left:0}
+.safe{display:grid;gap:8px;margin:18px 0 0;font-size:17px}
+.safe p{margin:0}
+.safe b{font-family:var(--label);font-weight:500;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-right:8px}
+.safe .no{color:var(--bad)}
+.phmsg{font-family:var(--label);font-size:12px;color:var(--muted)}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+.count{font-family:var(--label);font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;text-align:center;margin:12px 0}
+.center{justify-content:center}
+.q{font-size:22px;line-height:1.35;text-align:center;margin:8px 0 20px;text-wrap:balance}
+.opts{display:grid;gap:10px}
+.opt{width:100%;text-align:left;border:1px solid var(--line);border-radius:2px;padding:14px 16px;font-size:17.5px;display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+.opt .tag{font-family:var(--label);font-size:11px;letter-spacing:.12em;text-transform:uppercase;flex:none}
+.opt.right{border-color:var(--good)} .opt.right .tag{color:var(--good)}
+.opt.wrong{border-color:var(--bad)} .opt.wrong .tag{color:var(--bad)}
+.opt[aria-pressed="true"]{border-color:var(--ink);background:var(--wash)}
+.opt:disabled{cursor:default}
+.result{text-align:center;margin:20px 0;font-size:18px}
+.big{font-family:var(--display);font-weight:600;font-size:54px;line-height:1;font-variant-numeric:tabular-nums}
+footer{border-top:1px solid var(--line);padding-block:22px 10px;text-align:center}
+@media (prefers-reduced-motion:no-preference){ details.dish[open] .body{animation:in .25s ease-out} @keyframes in{from{opacity:.4;transform:translateY(-4px)}to{opacity:1;transform:none}} }
+</style>
+</head>
+<body>
+
+<header class="top"><div class="wrap">
+  <p class="lab">Dining room study companion</p>
+  <h1 class="caps">Fall Menu</h1>
+  <p class="note">Nineteen plates, six pours, one sheet. Tap a dish to open it.</p>
+</div></header>
+<nav aria-label="Study modes"><div class="wrap" id="tabs">
+  <button data-v="menu">Menu</button><button data-v="pairings">Pairings</button><button data-v="cards">Cards</button><button data-v="quiz">Practice</button><button data-v="allergies">Allergies</button>
+</div></nav>
+<main><div class="wrap" id="view"></div></main>
+<input type="file" accept="image/*" id="filepick" class="vh" tabindex="-1" aria-label="Choose a photo">
+<footer><div class="wrap"><div id="voicebar" hidden><p class="lab">Voice · tap one to hear it</p><div class="seg"><button data-voice="buttery">Buttery</button><button data-voice="airy">Airy</button><button data-voice="glassy">Glassy</button><button data-voice="rounded">Rounded</button></div></div><p class="note" id="voicenote" hidden>The four natural voices play in Chrome on a computer or in the Claude desktop app. Here the app uses your device voice.</p><p class="note">A personal study aid built from the lineup sheet of November 9. Spiels are drafts and pronunciations are guides: the kitchen and the sommelier team have the final word. For a real guest allergy, always go by the current sheet.</p></div></footer>
+
+<script>
+document.addEventListener('error',e=>{const t=e.target;if(!t||t.tagName!=='IMG')return;const f=t.closest('figure');if(f){f.hidden=true;const p=f.parentElement;if(p&&[...p.children].every(c=>c.hidden)){(p.closest('.roomsec')||p.closest('.sec')||p).hidden=true}}else{const n=t.nextElementSibling;if(n&&n.classList.contains('cap'))n.remove();t.remove()}},true);
+const ACTS=[
+ {n:'I',t:'Opening',std:'sekt',res:'clandestin',na:'Riesling grapes, chrysanthemum, mint and Thai basil tea, verjus, rice wine vinegar, agave',naNote:'Mirrors the sparkling Riesling: same grape, floral tea for aroma, verjus for the acidity.',pour:'The pairing begins with the dumpling. The cookie, the Magic Farm bites and the bread are served without a pour.'},
+ {n:'II',t:'Cold Sea and Garden',std:'velich',res:'magdeleine',na:'Sauvignon Blanc grapes, sesame and shiso tea, verjus, grapefruit vinegar, agave',naNote:'Crisp and herbal like the white wines. Contains sesame and citrus.',pour:'One pour covers all three plates.'},
+ {n:'III',t:'Warm Sea',std:'adams',res:'perret',na:'Chardonnay grapes, rooibos tea, coconut water, fennel vinegar, agave',naNote:'Rounder and softer, like Chardonnay. Contains coconut.',pour:'One pour covers all three plates.'},
+ {n:'IV',t:'The Bridge',std:'conciso',res:'lignier',na:'Chardonnay, white cranberry, bay leaf and jasmine tea, sencha, genmaicha',naNote:'The tea course. Toasted rice in the genmaicha suits squash and naan.',pour:'One dish with its own pour. White wine turns to red here.'},
+ {n:'V',t:'Mains',std:'pax',res:'mayacamas',na:'Merlot grapes, shiso and mandarin tea, juniper, maple vinegar, agave',naNote:'A red grape for the red-wine course. Juniper echoes the venison. Contains citrus.',pour:'One pour covers all three plates.'},
+ {n:'VI',t:'Sweet',std:'alcyone',res:'suduiraut',na:'Buckwheat, toasted coconut and hibiscus tea, vanilla, berry vinegar, lemon juice, coconut',naNote:'Listed for the doughnut and the coffee and chocolate, not the mochi. Contains coconut, citrus and buckwheat.',pour:'One pour covers all three desserts.'}
+];
+const G={
+ matsutake:{t:'Matsutake',p:'mat-soo-TAH-keh',l:'ja-JP',a:'まつたけ',m:'Prized Japanese pine mushroom of autumn, with a spicy, piney aroma.'},
+ truffle:{t:'Black truffle',p:'TRUH-ful',m:'Aromatic underground fungus. Counts under the mushroom allergy.'},
+ laminated:{t:'Laminated',p:'LAM-ih-nay-tid',m:'Dough folded with fat into many thin layers, like a croissant.'},
+ cucurbit:{t:'Cucurbitaceae',p:'kyoo-ker-bih-TAY-see-ee',m:'The gourd family: pumpkin, squash, cucumber, melon.'},
+ huacatay:{t:'Black mint (likely huacatay)',p:'wah-kah-TIE',m:'Peruvian herb tasting of mint, basil and citrus. Confirm with the kitchen.'},
+ kohlrabi:{t:'Kohlrabi',p:'kohl-RAH-bee',m:'Crisp, mildly sweet brassica, like a tender broccoli stem.'},
+ lovage:{t:'Lovage',p:'LUV-ij',m:'Herb with a strong celery and parsley flavor.'},
+ hibiscus:{t:'Hibiscus',p:'hih-BIS-kus',m:'Tart, cranberry-like red flower.'},
+ banyuls:{t:'Banyuls vinegar',p:'bahn-YULS',l:'fr-FR',a:'Banyuls',m:'Mellow, nutty vinegar made from the fortified wine of Banyuls in southern France.'},
+ pimenton:{t:'Pimentón',p:'pee-men-TOHN',l:'es-ES',a:'pimentón',m:'Spanish smoked paprika. A pepper, so it brings capsaicin and nightshade.'},
+ shiitake:{t:'Shiitake',p:'shee-TAH-keh',l:'ja-JP',a:'しいたけ',m:'Savory, meaty Japanese mushroom.'},
+ sansho:{t:'Sansho pepper',p:'SAHN-show',l:'ja-JP',a:'さんしょう',m:'Japanese relative of Sichuan pepper: citrusy, with a light tingle.'},
+ tonburi:{t:'Tonburi',p:'ton-BOO-ree',l:'ja-JP',a:'とんぶり',m:'Summer cypress seed from Akita, Japan. Called land caviar for its tiny beads and pop.'},
+ naan:{t:'Naan',p:'nahn',m:'Soft leavened flatbread.'},
+ endive:{t:'Endive',p:'EN-dyve, or ahn-DEEV',m:'Crisp, pale, pleasantly bitter leaf. Use the pronunciation the team uses.'},
+ citron:{t:'Citron',p:'SIT-run',m:'Thick-rinded, very fragrant citrus used mostly for its peel.'},
+ venison:{t:'Venison',p:'VEN-ih-sun',m:'Deer meat: lean, with a deep, gamey flavor.'},
+ juniper:{t:'Juniper',p:'JOO-nih-per',m:'Piney berry, the flavor of gin.'},
+ tamale:{t:'Tamale',p:'tuh-MAH-lee',m:'Steamed parcel, traditionally corn masa in a husk.'},
+ celeryroot:{t:'Celery root',p:'celeriac: suh-LAIR-ee-ak',m:'Knobby root with a mild celery flavor and a nutty sweetness.'},
+ mochi:{t:'Mochi',p:'MOH-chee',l:'ja-JP',a:'もち',m:'Soft, chewy Japanese rice cake.'},
+ sekt:{t:'Sekt',p:'zekt',l:'de-DE',a:'Sekt',m:'German word for sparkling wine.'},
+ bdn:{t:'Blanc de Noirs',p:'blahn duh NWAHR',l:'fr-FR',a:'Blanc de Noirs',m:'White wine made from black grapes.'},
+ viognier:{t:'Viognier',p:'vee-oh-NYAY',l:'fr-FR',a:'Viognier',m:'The grape of Condrieu: lush and perfumed, with apricot and pear.'},
+ verjus:{t:'Verjus',p:'vair-ZHOO',l:'fr-FR',a:'verjus',m:'Pressed juice of unripe grapes: tart like vinegar, but softer.'},
+ genmaicha:{t:'Genmaicha',p:'gen-MY-chah',l:'ja-JP',a:'げんまいちゃ',m:'Green tea with toasted rice.'},
+ sencha:{t:'Sencha',p:'SEN-chah',l:'ja-JP',a:'せんちゃ',m:'Grassy Japanese green tea.'},
+ shiso:{t:'Shiso',p:'SHEE-soh',l:'ja-JP',a:'しそ',m:'Japanese herb between mint and basil.'},
+ rooibos:{t:'Rooibos',p:'ROY-boss',m:'South African red bush tea, naturally caffeine free.'},
+ allium:{t:'Allium',p:'AL-ee-um',m:'Onion, garlic, shallot, leek, chive.'},
+ nightshades:{t:'Nightshades',p:'NITE-shaydz',m:'Tomato, peppers, chili, potato, eggplant.'},
+ mise:{t:'Mise en place',p:'meez ahn PLAHS',l:'fr-FR',a:'mise en place',m:'On the sheet: the silverware to set before the dish lands.'}
+};
+const W={
+ sekt:{n:'Riesling Sekt, Finger Lakes, New York 2022',short:'Riesling Sekt, Finger Lakes',p:'REES-ling zekt',l:'de-DE',a:'Riesling Sekt',g:'Champ',what:'Sparkling Riesling from New York: high acid, lime and green apple. The producer name is unreadable on the sheet, so ask.',why:'Bubbles and acidity wake up the palate and lift the earthy, soy-rich dumpling.'},
+ clandestin:{n:'Clandestin, Boréal, Blanc de Noirs, Champagne, France',short:'Clandestin Boréal, Champagne',p:'klahn-des-TAN · boh-ray-AHL · blahn duh NWAHR',l:'fr-FR',a:'Clandestin, Boréal, Blanc de Noirs, Champagne',g:'Champ',what:'Champagne from the southern Côte des Bar, made from Pinot Noir. Dry, vinous, mineral.',why:'Pinot Noir gives more depth and savor than the Sekt, a richer match for matsutake.'},
+ velich:{n:'Velich, Welschriesling, Burgenland, Austria 2023',short:'Velich Welschriesling, Austria',p:'VEH-likh · VELSH-rees-ling · BOOR-gen-lahnt',l:'de-DE',a:'Velich, Welschriesling, Burgenland',g:'AP',what:'Welschriesling is not related to Riesling. Light, dry and crisp, with green apple and citrus.',why:'Delicate enough for sweet crab and scallop, fresh enough for the vinegar on the bitter greens.'},
+ magdeleine:{n:'Clos Sainte Magdeleine, Vermentino, Baume-Noire, Cassis, Provence, France 2022',short:'Clos Sainte Magdeleine Vermentino, Cassis',p:'kloh sant mag-duh-LEN · ver-men-TEE-noh · bohm NWAHR · kah-SEE',l:'fr-FR',a:'Clos Sainte Magdeleine, Vermentino, Baume-Noire, Cassis',g:'Syrah',what:'Cassis here is a seaside town near Marseille, not blackcurrant. Saline, herbal, textured white grown above the Mediterranean.',why:'A wine that smells like the sea for dishes from the sea. Its herbal side picks up mint and lovage.'},
+ adams:{n:'Adamswein, Chardonnay, Auf dem Haun, Rheinhessen, Germany 2024',short:'Adamswein Chardonnay, Rheinhessen',p:'AH-dahms-vine · shar-doh-NAY · owf dem HOWN · RINE-hess-en',l:'de-DE',a:'Adamswein, Chardonnay, Auf dem Haun, Rheinhessen',g:'W Burg',what:'Cool-climate German Chardonnay: more body than the last pour, still taut and mineral.',why:'Chardonnay with butter-poached lobster is a classic. Its freshness handles grapefruit and pimentón.'},
+ perret:{n:'André Perret, Chéry, Condrieu, Rhône Valley, France 2020',short:'André Perret Condrieu Chéry',p:'ahn-DRAY peh-RAY · shay-REE · kohn-dree-UH',l:'fr-FR',a:'André Perret, Chéry, Condrieu',g:'Syrah',what:'Condrieu is the home of the Viognier grape, and Chéry is one of its top slopes. Lush and perfumed: apricot, pear, flowers.',why:'Rich texture matches lobster, and the stone-fruit perfume mirrors the pear on the plate.'},
+ conciso:{n:'Niepoort, Conciso, Baga and Jaen, Portugal 2014',short:'Niepoort Conciso, Portugal',p:'NEE-port · kon-SEE-zoo · BAH-gah · zhah-ENG',l:'pt-PT',a:'Niepoort, Conciso, Baga, Jaen',g:'R Burg',what:'Light, elegant Portuguese red with over ten years of age: red fruit, earth, fresh acidity. The sheet says Douro; this wine is usually labeled Dão (downg). Confirm.',why:'A gentle first red. Earthy notes suit squash, and low tannin does not clash with cream.'},
+ lignier:{n:'Hubert Lignier, Seuvrées, Gevrey-Chambertin, Burgundy, France 2023',short:'Hubert Lignier Gevrey-Chambertin',p:'oo-BAIR lee-NYAY · suh-VRAY · zhev-RAY shahm-bair-TAN',l:'fr-FR',a:'Hubert Lignier, Seuvrées, Gevrey-Chambertin',g:'R Burg',what:'Red Burgundy, all Pinot Noir, from a single named plot. Young: bright cherry, spice, earth.',why:'Pinot Noir is the gentlest classic red, silky enough for squash and cream.'},
+ pax:{n:'Pax, Syrah, Castelli-Knight Ranch, Russian River Valley, California 2013',short:'Pax Syrah, Russian River',p:'paks · sih-RAH · kas-TELL-ee nite',g:'Syrah',what:'Cool-climate California Syrah with age: dark fruit, black pepper, olive, smoked meat.',why:'Savory, peppery Syrah is a natural with duck and game, and its earthiness links to the mushroom in all three mains.'},
+ mayacamas:{n:'Mayacamas, Cabernet Sauvignon, Mt. Veeder, Napa Valley, California 2003',short:'Mayacamas Cabernet, Napa',p:'my-uh-KAH-mus · kab-er-NAY soh-vin-YOHN · VEE-der',g:'BDX',what:'Historic mountain estate known for firm, long-lived Cabernet. At over twenty years: cedar, tobacco, dried blackcurrant, soft tannin.',why:'Structure for duck and venison, with aged forest-floor notes that meet mushroom and chestnut.'},
+ alcyone:{n:'Pablo Fallabrino, Alcyone, Tannat, Atlántida, Uruguay NV',short:'Alcyone Tannat, Uruguay',p:'fah-lah-BREE-noh · al-SY-oh-nee · tah-NAHT · aht-LAHN-tee-dah',l:'es-ES',a:'Pablo Fallabrino, Alcyone, Tannat, Atlántida',g:'AP',what:'Sweet dessert wine from Tannat, the signature red grape of Uruguay, with chocolate and vanilla flavors. NV means non-vintage.',why:'It tastes like dessert itself: chocolate and vanilla echo the coffee and chocolate, and its spice suits cinnamon.'},
+ suduiraut:{n:'Château Suduiraut, Sauternes, Bordeaux, France 2006',short:'Château Suduiraut, Sauternes',p:'shah-TOH soo-dwee-ROH · soh-TAIRN',l:'fr-FR',a:'Château Suduiraut, Sauternes',g:'Sauternes',what:'Premier Cru Classé Sauternes, mostly Sémillon, sweetened by noble rot. Honey, apricot, saffron, bright acidity.',why:'Honeyed fruit for apple and passionfruit, with acidity that keeps it from feeling heavy.'},
+ larue:{n:'Domaine Larue, Murgers des Dents de Chien, Saint-Aubin Premier Cru, Burgundy, France 2024',short:'Domaine Larue Saint-Aubin 1er Cru',p:'doh-MEN lah-ROO · mur-ZHAY day dahn duh shee-EN · san toh-BAN · pruh-MYAY kroo',l:'fr-FR',a:'Domaine Larue, Murgers des Dents de Chien, Saint-Aubin Premier Cru',g:'W Burg',what:'New by-the-glass Chardonnay. Saint-Aubin sits beside Puligny-Montrachet, and this stony vineyard gives a tense, mineral white Burgundy.',why:'Not part of the pairing. Know it for guests ordering by the glass.'}
+};
+const GLASS={Champ:'Champagne glass',AP:'All-purpose glass','W Burg':'White Burgundy glass',Syrah:'Syrah glass','R Burg':'Red Burgundy glass',BDX:'Bordeaux glass',Sauternes:'Sauternes glass'};
+const D=[
+ {id:'cookie',act:0,n:'Black and White Cookie',pair:0,mise:[],al:['Stone fruit','Orchard fruit','Cocoa','Dairy','Gluten','Egg','Corn','Alcohol (cooked)','Seeds'],terms:[],d:'The welcome bite: a take on the classic New York black and white cookie, eaten by hand. Nine allergens on the smallest plate of the night.',s:'Welcome. We begin with our black and white cookie, a small nod to New York to start your evening.'},
+ {id:'tea',act:0,grp:'Magic Farm Celebration',n:'Matsutake Tea',pair:0,mise:[],al:['Seaweed','Mushroom','Vinegar'],terms:['matsutake'],d:'First of three bites built on produce from the farm. A clear, aromatic sip; seaweed on the sheet suggests a kombu base.',s:'This is a celebration of our farm upstate, in three bites. To begin, a warm tea of matsutake, the pine mushroom of autumn.'},
+ {id:'turnip',act:0,n:'Turnip and Radish Salad',pair:0,mise:[],al:['Citrus','Soy','Orchard fruit','Sunflower','Allium'],terms:[],d:'Second farm bite: crisp, peppery raw roots.',s:'Next, a small salad of turnip and radish from the farm, crisp and bright.'},
+ {id:'parsnip',act:0,n:'Parsnip and Black Truffle',pair:0,mise:[],al:['Mushroom','Nightshades','Alcohol','Citrus','Tree nuts','Legumes'],terms:['truffle'],d:'Third farm bite: sweet root with earthy truffle. The only opening bite with tree nuts.',s:'And to finish, parsnip with black truffle: the sweetness of the root against the earthiness of the truffle.'},
+ {id:'dumpling',act:0,n:'Matsutake Dumpling',pair:1,mise:['App fork','Dessert spoon'],al:['Mushroom','Allium','Citrus','Nightshades','Soy','Gluten'],terms:['matsutake'],d:'The first plated course and the second matsutake moment after the tea. The pairing starts here, with bubbles.',s:'This is our matsutake dumpling. The pine mushroom from your tea returns here in a richer form. To go with it, a sparkling Riesling from the Finger Lakes, here in New York.'},
+ {id:'bread',act:0,n:'Laminated Bread with Onion and Pumpkin Butter',pair:0,mise:['B&B knife'],al:['Seeds','Coconut','Cucurbitaceae','Sunflower','Gluten','Allium','Soy','Oat','Rice','Legumes'],terms:['laminated','cucurbit'],d:'Layered, croissant-style bread. No dairy is listed, so the butter appears to be plant-based; coconut and sunflower are on the sheet.',s:'Our bread is laminated, folded into many thin layers like a croissant, with onion. Alongside it, a pumpkin butter.'},
+ {id:'crab',act:1,n:'Crab with Beet and Black Mint',pair:1,mise:['App fork','App knife'],al:['Citrus','Shellfish (crustacean)','Allium','Soy','Beet','Sunflower','Cilantro'],terms:['huacatay'],d:'Sweet crab against earthy beet, lifted by black mint. Beet is listed as its own allergen here.',s:'Here we have crab with beet and black mint: the sweetness of the crab, the earthiness of the beet, and a fresh herbal lift. With it, a crisp Welschriesling from Burgenland in Austria.'},
+ {id:'scallop',act:1,n:'Scallop with Kohlrabi, Hazelnut and Lovage',pair:1,mise:['App fork','Soup spoon'],al:['Shellfish','Alcohol (cooked)','Soy','Allium','Tree nuts','Orchard fruit'],terms:['kohlrabi','lovage'],d:'The soup spoon tells you there is sauce or broth. Hazelnut is the tree nut. No citrus listed, unlike the other two plates in this act.',s:'This is scallop with kohlrabi, hazelnut and lovage, an herb with a bright celery note. With it, a crisp Welschriesling from Burgenland in Austria.'},
+ {id:'greens',act:1,n:'Bitter Greens Salad with Date, Hibiscus and Banyuls Vinegar',pair:1,mise:['App fork','App knife'],al:['Caffeine','Allium','Seeds','Citrus','Mushroom','Vinegar'],terms:['hibiscus','banyuls'],d:'Bitter leaves balanced by sweet date and tart hibiscus. The plant-based plate of this act and the only dish that lists caffeine.',s:'A salad of bitter greens, balanced with the sweetness of date, tart hibiscus, and Banyuls vinegar from the south of France. With it, a crisp Welschriesling from Austria.'},
+ {id:'lobster',act:2,n:'Lobster Poached with Pear and Cabbage',pair:1,mise:['Entrée fork','Entrée knife'],al:['Shellfish','Nightshades','Allium','Alcohol (cooked)','Citrus (grapefruit)','Dairy','Egg','Gluten'],terms:[],d:'The first plate to get the large entrée silverware. Dairy on the sheet points to a butter poach or butter sauce.',s:'This is lobster, gently poached, with pear and cabbage. With it, a Chardonnay from Rheinhessen in Germany, with enough richness for the lobster and plenty of freshness.'},
+ {id:'snapper',act:2,n:'Red Snapper with Mussels and Pimentón',pair:1,mise:['App fork','App knife','Soup spoon'],al:['Citrus (grapefruit)','Alcohol (cooked)','Dairy','Fish','Capsaicin','Shellfish (bivalves)','Nightshades','Allium'],terms:['pimenton'],d:'Three pieces of silver, the most on the menu. The only dish with fish and the only one with capsaicin; its shellfish is bivalve, not crustacean.',s:'Red snapper with mussels and pimentón, the smoked paprika of Spain. With it, a Chardonnay from Rheinhessen in Germany.'},
+ {id:'rice',act:2,n:'Rice with Shiitake and Sansho Pepper',pair:1,mise:['App fork','Dessert spoon'],al:['Mushroom','Citrus','Allium','Nightshades','Seaweed','Alcohol (cooked)'],terms:['shiitake','sansho'],d:'Same silver as the dumpling, and both are mushroom dishes. The plant-based plate of this act.',s:'This is rice with shiitake mushroom and sansho, a Japanese pepper with a citrus note and a gentle tingle. With it, a Chardonnay from Rheinhessen in Germany.'},
+ {id:'squash',act:3,n:'Squash with Tonburi, Cream and Naan',pair:1,mise:['Teaspoon'],al:['Seaweed','Gluten','Soy','Citrus','Allium','Dairy'],terms:['tonburi','naan'],d:'Reads like a caviar service built on squash, which is why it takes the only teaspoon on the menu. The switch from white wine to red.',s:'This is squash with tonburi, cream and naan. Tonburi is a seed from Japan known as land caviar, so we serve it the way you would enjoy caviar. With it, our first red: a light, aged wine from Niepoort in Portugal.'},
+ {id:'duck',act:4,n:'Dry-Aged Duck with Endive and Citron',pair:1,mise:['Entrée fork','Steak knife'],al:['Poultry','Alcohol','Dairy','Citrus','Coriander','Mushroom','Honey'],terms:['endive','citron'],d:'Dry-aging concentrates the flavor and crisps the skin. The only main with no allium listed, and the only dish with honey, poultry and coriander.',s:'Our dry-aged duck, with endive and citron. Aging concentrates the flavor of the duck, and the bitterness of the endive and the perfume of the citron balance its richness. With it, a Syrah from Pax in the Russian River Valley, from 2013.'},
+ {id:'venison',act:4,n:'Venison with Onion and Juniper',pair:1,mise:['Entrée fork','Steak knife'],al:['Dairy','Allium','Alcohol','Mushroom','Gluten'],terms:['venison','juniper'],d:'Lean game with sweet onion and piney juniper. Five allergens, and the only main with gluten. The sheet spells it "Vension".',s:'This is venison with onion and juniper: a lean, deep-flavored meat with the sweetness of onion and the pine note of juniper. With it, a Syrah from Pax in the Russian River Valley, from 2013.'},
+ {id:'tamale',act:4,n:'Celery Root Tamale with Chestnut and Mushroom',pair:1,mise:['Entrée fork','Entrée knife'],al:['Tree nuts','Allium','Alcohol','Mushroom','Orchard fruit'],terms:['tamale','celeryroot'],d:'No meat, so no steak knife. Chestnut is the tree nut. The plant-based main.',s:'A tamale of celery root, with chestnut and mushroom: the flavors of the forest floor in autumn. With it, a Syrah from Pax in the Russian River Valley, from 2013.'},
+ {id:'mochi',act:5,n:'Passionfruit Mochi with Vanilla',pair:1,noNA:1,mise:[],al:['Rice','Oat','Coconut'],terms:['mochi'],d:'A hand-held bite, bright and tart. Just three allergens, and no gluten, dairy or egg.',s:'To begin dessert, a passionfruit mochi with vanilla: a soft rice cake with the brightness of passionfruit.'},
+ {id:'doughnut',act:5,n:'Apple Doughnut with Cinnamon Ice Cream',pair:1,mise:['App fork','Dessert spoon'],al:['Gluten','Dairy','Egg','Orchard fruit'],terms:[],d:'Warm apple and fried dough with cold cinnamon ice cream. The baking trio (gluten, dairy, egg) plus the apple.',s:'This is our apple doughnut, served warm, with cinnamon ice cream. With it, a sweet Tannat from Uruguay.'},
+ {id:'coffee',act:5,n:'Coffee and Chocolate',pair:1,mise:['App fork','Dessert spoon'],al:['Gluten','Dairy','Coffee','Chocolate','Egg','Vinegar'],terms:[],d:'The two classic meal-enders as one dessert. Same baking trio as the doughnut, plus coffee, chocolate and vinegar.',s:'To finish, coffee and chocolate together in one dessert. With it, a sweet Tannat from Uruguay, which carries its own notes of chocolate and vanilla.'}
+];
+const ING={"tea": ["matsutake", "kombu"], "parsnip": ["parsnip", "black_truffle"], "dumpling": ["matsutake"], "crab": ["huacatay_black_mint"], "scallop": ["kohlrabi", "lovage"], "greens": ["hibiscus_dried"], "snapper": ["pimenton"], "rice": ["shiitake", "sansho_pepper", "kombu"], "squash": ["tonburi", "kombu"], "duck": ["endive", "citron"], "venison": ["juniper_berries"], "tamale": ["celery_root", "chestnut"], "mochi": ["passionfruit", "mochi"]};
+const INAME={matsutake:'Matsutake',kombu:'Kombu',parsnip:'Parsnip',black_truffle:'Black truffle',huacatay_black_mint:'Huacatay (black mint?)',kohlrabi:'Kohlrabi',lovage:'Lovage',hibiscus_dried:'Hibiscus',pimenton:'Pimentón',shiitake:'Shiitake',sansho_pepper:'Sansho',tonburi:'Tonburi',endive:'Endive',citron:'Citron',juniper_berries:'Juniper',celery_root:'Celery root',chestnut:'Chestnut',passionfruit:'Passionfruit',mochi:'Mochi',genmaicha:'Genmaicha',sencha:'Sencha',shiso:'Shiso'};
+const GIMG={matsutake:'matsutake',truffle:'black_truffle',huacatay:'huacatay_black_mint',kohlrabi:'kohlrabi',lovage:'lovage',hibiscus:'hibiscus_dried',pimenton:'pimenton',shiitake:'shiitake',sansho:'sansho_pepper',tonburi:'tonburi',endive:'endive',citron:'citron',juniper:'juniper_berries',celeryroot:'celery_root',mochi:'mochi',genmaicha:'genmaicha',sencha:'sencha',shiso:'shiso'};
+const WNOTE={sekt:'Example only: a different producer. Confirm the real bottle.',velich:'May be a different Velich bottling. Compare at tasting group.'};
+const strip=ks=>`<div class="strip">${ks.map(k=>`<figure><img src="img/i-${k}.jpg" alt="${esc(INAME[k])}"><figcaption>${esc(INAME[k])}</figcaption></figure>`).join('')}</div>`;
+const SEEN={
+ bread:'Guests describe a flaky bun between a croissant and a roll, with onion folded into the layers. The spread was reported as a coconut and sunflower butter with a center of toasted sunflower seed and confit garlic. The sheet now lists it with pumpkin.',
+ scallop:'Guests describe a tender scallop wrapped in thin radish and kohlrabi, with a roasted scallop broth that tastes citrusy and nutty from the hazelnut. That explains the soup spoon.',
+ lobster:'Guests describe gently poached lobster with pear and crunchy cabbage in a lobster bisque sauce.',
+ squash:'The winter version used cauliflower and pita: tonburi spread over the vegetable like caviar, airy bread alongside and a rich cream. Expect the same caviar-service format with squash and naan.',
+ duck:'Guests describe duck aged about two weeks, with crisp skin, glazed with honey and lavender. Honey is still on the allergy sheet; the garnish is now endive and citron.'
+};
+const AKEYS=['Gluten','Dairy','Egg','Shellfish','Fish','Tree nuts','Soy','Mushroom','Allium','Citrus','Nightshades','Alcohol','Seaweed','Orchard fruit','Seeds','Sunflower','Coconut','Legumes','Vinegar'];
+const NA_AL={Citrus:'The N/A pours for acts II, V and VI contain citrus (grapefruit vinegar, mandarin, lemon).',Coconut:'The N/A pours for acts III and VI contain coconut.',Alcohol:'Offer the N/A pairing. Dishes below were cooked with alcohol.',Seeds:'The N/A pour for act II contains sesame.'};
+const UNIQ=[['honey','duck'],['capsaicin','snapper'],['caffeine','greens'],['beet','crab'],['cucurbitaceae','bread'],['corn','cookie'],['poultry','duck'],['fish','snapper'],['cilantro','crab'],['coriander','duck']];
+
+const $=s=>document.querySelector(s), view=$('#view');
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const has=(d,k)=>d.al.some(a=>a.toLowerCase().startsWith(k.toLowerCase()));
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const miseText=d=>d.mise.length?d.mise.join(', '):'Nothing: eaten by hand';
+
+/* ---------- audio ---------- */
+const SAY=[]; let ttsCap=null;
+const hasSynth='speechSynthesis' in window;
+function sayBtn(text,lang,alt,label){SAY.push([text,lang,alt]);return `<button class="say" data-say="${SAY.length-1}" aria-label="Hear ${esc(label||text)}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4.2 4.2 0 0 1 0 6M18 6.5a8 8 0 0 1 0 11"/></svg></button>`}
+const vScore=v=>(/premium|enhanced|natural|neural/i.test(v.name)?4:0)+(/siri|google|samantha|ava|allison|zoe/i.test(v.name)?2:0)+(v.localService?0:1);
+const bestVoice=(vs,test)=>vs.filter(v=>v.lang&&test(v.lang)).sort((x,y)=>vScore(y)-vScore(x))[0];
+function synthSay(text,lang,alt,rate){if(!hasSynth)return;try{const s=window.speechSynthesis;s.cancel();const vs=s.getVoices()||[];const base=(lang||'en').slice(0,2).toLowerCase();let u;
+    const v=bestVoice(vs,l=>l.toLowerCase().startsWith(base));
+    if(base!=='en'&&v){u=new SpeechSynthesisUtterance(alt||text);u.voice=v;u.lang=v.lang}
+    else{u=new SpeechSynthesisUtterance(text);const ev=bestVoice(vs,l=>/^en[-_]US/i.test(l))||bestVoice(vs,l=>/^en/i.test(l));if(ev){u.voice=ev;u.lang=ev.lang}else u.lang='en-US'}
+    u.rate=rate||0.9;s.speak(u)}catch(e){}}
+function say(text,lang,alt,rate){
+  if(ttsCap){const foreign=lang&&!/^en/i.test(lang)&&alt;try{if(hasSynth)speechSynthesis.cancel()}catch(e){}
+    ttsCap.speak(foreign?alt:text,{voice:VOICE,language:foreign?lang:'en',rate:Math.max(0.7,Math.min(1.5,rate||0.9))}).catch(err=>{const c=err&&err.code;if(c==='not_granted'){ttsCap=null;audioUI()}if(c==='not_granted'||c==='unavailable'||c==='upstream_error'||c==='no_gesture')synthSay(text,lang,alt,rate)});return}
+  synthSay(text,lang,alt,rate)}
+let VOICE='buttery';try{const v=localStorage.getItem('fallmenu.voice');if(['buttery','airy','glassy','rounded'].includes(v))VOICE=v}catch(e){}
+function paintVoice(){document.querySelectorAll('[data-voice]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.voice===VOICE))}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-voice]');if(!b)return;VOICE=b.dataset.voice;try{localStorage.setItem('fallmenu.voice',VOICE)}catch(err){}paintVoice();say('Dry-aged duck with endive and citron, paired with a Syrah from Pax in the Russian River Valley.','en',null,0.95)});
+function audioUI(){const vb=document.getElementById('voicebar'),vn=document.getElementById('voicenote');if(vb){vb.hidden=!ttsCap;vn.hidden=!!ttsCap;paintVoice()}document.body.classList.toggle('no-audio',!(hasSynth||ttsCap))}
+if(hasSynth){try{speechSynthesis.getVoices();speechSynthesis.onvoiceschanged=()=>{}}catch(e){}}
+audioUI();
+(async()=>{try{ttsCap=await window.claude?.use?.('tts')||null}catch(e){}audioUI()})();
+document.addEventListener('click',e=>{const b=e.target.closest('[data-say]');if(b){e.preventDefault();e.stopPropagation();const [t,l,a]=SAY[+b.dataset.say];say(t,l,a)}
+  const sp=e.target.closest('[data-listen]');if(sp){const ta=document.getElementById('sp-'+sp.dataset.listen);if(ta)say(ta.value,'en',null,0.95)}});
+
+/* ---------- saved spiels: private per person, with a copy on this device ---------- */
+let PH={}, assets=null, phTarget=null;
+try{PH=JSON.parse(localStorage.getItem('fallmenu.photos')||'{}')||{}}catch(e){PH={}}
+let SP={}, ref=null, saving=false, dirty=false, timer=null, cloud='device';
+try{SP=JSON.parse(localStorage.getItem('fallmenu.spiels')||'{}')||{}}catch(e){SP={}}
+let ST={ver:{},sr:{}};
+try{const x=JSON.parse(localStorage.getItem('fallmenu.state')||'{}')||{};ST={ver:x.ver||{},sr:x.sr||{}}}catch(e){}
+const spiel=d=>(d.id in SP)?SP[d.id]:d.s;
+function setStatus(t){document.querySelectorAll('.status').forEach(el=>el.textContent=t)}
+async function flush(){if(saving)return;saving=true;while(dirty){dirty=false;try{localStorage.setItem('fallmenu.spiels',JSON.stringify(SP));localStorage.setItem('fallmenu.photos',JSON.stringify(PH));localStorage.setItem('fallmenu.state',JSON.stringify(ST))}catch(e){}
+    if(ref){try{await ref.set({spiels:SP,photos:PH,state:ST,updatedAt:Date.now()});cloud='account'}catch(e){cloud='device'}}}
+  saving=false;setStatus(cloud==='account'?'Saved to your account':'Saved on this device')}
+function queueSave(){dirty=true;setStatus('Saving…');clearTimeout(timer);timer=setTimeout(flush,700)}
+(async()=>{try{const use=window.claude?.use;if(!use)return;const [user,db]=await Promise.all([window.claude.use('user'),window.claude.use('db')]);if(!user||!db)return;
+    const id=await user.id();if(!id)return;ref=db.collection('data/users/'+id).doc('study');
+    const snap=await Promise.race([ref.get(),new Promise((_,r)=>setTimeout(()=>r(new Error('slow')),10000))]);
+    cloud='account';const remote=snap.exists&&snap.data()&&snap.data().spiels;const rp=snap.exists&&snap.data()&&snap.data().photos;
+    if(rp&&typeof rp==='object'){PH=Object.assign({},PH,rp);fillSlots()}
+    const rs=snap.exists&&snap.data()&&snap.data().state;
+    if(rs&&typeof rs==='object'){ST.ver=Object.assign({},ST.ver,rs.ver||{});for(const k in (rs.sr||{})){if(!ST.sr[k]||(rs.sr[k].t||0)>(ST.sr[k].t||0))ST.sr[k]=rs.sr[k]}paintVer()}
+    if(remote&&typeof remote==='object'){SP=Object.assign({},SP,remote);try{localStorage.setItem('fallmenu.spiels',JSON.stringify(SP))}catch(e){}
+      D.forEach(d=>{const ta=document.getElementById('sp-'+d.id);if(ta&&document.activeElement!==ta)ta.value=spiel(d)})}
+    else if(Object.keys(SP).length||Object.keys(PH).length||Object.keys(ST.sr).length||Object.keys(ST.ver).length){dirty=true;flush()}
+  }catch(e){}})();
+document.addEventListener('input',e=>{const ta=e.target.closest('textarea[data-sp]');if(ta){SP[ta.dataset.sp]=ta.value;queueSave()}});
+document.addEventListener('click',e=>{const r=e.target.closest('[data-reset]');if(r){const d=D.find(x=>x.id===r.dataset.reset);delete SP[d.id];const ta=document.getElementById('sp-'+d.id);if(ta)ta.value=d.s;queueSave()}});
+
+/* ---------- your own photos ---------- */
+function fillSlots(){paintVer();document.querySelectorAll('[data-th]').forEach(el=>{const k=el.dataset.th,src=PH[k]?'/_blob/'+PH[k]:(ING[k]?'img/i-'+ING[k][0]+'.jpg':'');const cur=el.firstChild&&el.firstChild.getAttribute('src');if(cur!==(src||null))el.innerHTML=src?`<img src="${esc(src)}" alt="">`:''});
+  document.querySelectorAll('[data-ph]').forEach(el=>{const k=el.dataset.ph,id=PH[k];
+  const wk=k.startsWith('w-')?k.slice(2):null;
+  el.innerHTML=(id?`<img src="/_blob/${esc(id)}" alt="${esc(el.dataset.label||'Your photo')}">`:wk?`<img src="img/w-${wk}.jpg" alt="${esc(el.dataset.label)}" style="object-fit:contain;max-height:340px"><span class="cap">${esc(WNOTE[wk]||'Web photo. The vintage may differ from the sheet.')}</span>`:'')+(assets?`<div class="row"><button class="btn quiet" data-addph="${k}">${id?'Replace photo':'Add your photo'}</button>${id?`<button class="btn quiet" data-rmph="${k}">Remove</button>`:''}<span class="phmsg" aria-live="polite"></span></div>`:'')})}
+function phMsg(k,t){const el=document.querySelector('[data-ph="'+k+'"] .phmsg');if(el)el.textContent=t}
+function shrink(file){return new Promise(res=>{const url=URL.createObjectURL(file),im=new Image();
+  im.onload=()=>{try{const m=1400,r=Math.min(1,m/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.round(im.width*r);c.height=Math.round(im.height*r);c.getContext('2d').drawImage(im,0,0,c.width,c.height);URL.revokeObjectURL(url);c.toBlob(b=>res(b||file),'image/jpeg',0.85)}catch(e){res(file)}};
+  im.onerror=()=>{URL.revokeObjectURL(url);res(file)};im.src=url})}
+(async()=>{try{assets=await window.claude?.use?.('assets')||null}catch(e){}fillSlots()})();
+document.addEventListener('click',e=>{const a=e.target.closest('[data-addph]');if(a){phTarget=a.dataset.addph;$('#filepick').click();return}
+  const r=e.target.closest('[data-rmph]');if(r){const k=r.dataset.rmph,old=PH[k];delete PH[k];queueSave();fillSlots();if(assets&&old)assets.delete(old).catch(()=>{})}});
+$('#filepick').addEventListener('change',async e=>{const f=e.target.files&&e.target.files[0];e.target.value='';if(!f||!assets||!phTarget)return;const k=phTarget;phMsg(k,'Adding photo…');
+  try{const blob=await shrink(f),r=await assets.upload(blob),old=PH[k];PH[k]=r.id;queueSave();fillSlots();if(old)assets.delete(old).catch(()=>{})}catch(err){phMsg(k,'That photo could not be added. Try another image.')}});
+new MutationObserver(fillSlots).observe(view,{childList:true});
+
+/* ---------- confirmed or draft ---------- */
+const QS=[['q-sekt','Who makes the Riesling Sekt? The name is unreadable on the sheet.'],['q-choice','Do guests choose one plate in Acts II, III and V, or is the progression set?'],['q-mint','What is the black mint on the crab?'],['q-conciso','Is the Niepoort Conciso from the Douro, as the sheet says, or the Dão?'],['q-glass','Are the bracketed codes on the sheet (AP, W Burg, BDX) the glassware?'],['q-velich','Which Velich Welschriesling bottle is poured?'],['q-dessert','Does the guest get the doughnut, the coffee and chocolate, or both?']];
+const verBtn=k=>`<button class="btn vbtn" data-ver="${k}" aria-pressed="false">Mark confirmed</button>`;
+function paintVer(){document.querySelectorAll('[data-ver]').forEach(b=>{const on=!!ST.ver[b.dataset.ver];b.setAttribute('aria-pressed',on);if(b.classList.contains('vbtn'))b.textContent=on?'Confirmed':'Mark confirmed';else{const t=b.querySelector('.tag');if(t)t.textContent=on?'Answered':'Open'}});
+  document.querySelectorAll('[data-vb]').forEach(el=>{const on=!!ST.ver[el.dataset.vb];el.textContent=on?'Confirmed':'Draft';el.classList.toggle('on',on)});
+  const el=document.querySelector('[data-conf]');if(el){const items=[...D.map(d=>d.id),...Object.keys(W).map(k=>'w-'+k)],c=items.filter(k=>ST.ver[k]).length,o=QS.filter(q=>!ST.ver[q[0]]).length;el.textContent=`Confirmed ${c} of ${items.length} · ${o} open question${o===1?'':'s'}`}}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-ver]');if(b){ST.ver[b.dataset.ver]=!ST.ver[b.dataset.ver];queueSave();paintVer();return}
+  const j=e.target.closest('[data-jump]');if(j){const t=document.getElementById('act-'+j.dataset.jump);if(t)t.scrollIntoView()}});
+document.addEventListener('input',e=>{if(e.target.id!=='q')return;const q=e.target.value.trim().toLowerCase();view.classList.toggle('searching',!!q);let n=0;view.querySelectorAll('details.dish').forEach(el=>{const m=!q||el.dataset.s.includes(q);el.hidden=!m;if(m)n++});const c=$('#qcount');c.hidden=!q;c.textContent=q?(n?`${n} dish${n===1?'':'es'} found`:'No dish matches. Try an ingredient, an allergen or a wine.'):''});
+
+/* ---------- utensil icons ---------- */
+const UT={
+ fork:'<path d="M8 4v8a4 4 0 0 0 8 0V4M12 4v41"/>',
+ efork:'<path d="M5.5 3v9a6.5 6.5 0 0 0 13 0V3M9.8 3v9M14.2 3v9M12 18.5v6"/><path d="M10.2 24.5h3.6l1.2 18a3 3 0 0 1-6 0z" fill="currentColor" stroke="currentColor"/>',
+ knife:'<path d="M11 5c3.5 3 4.5 11 3.5 19H11zM11 24v21"/>',
+ eknife:'<path d="M9.5 3c6.5 4 8.5 13 6.5 21.5H9.5z"/><path d="M9.7 24.5h4.6l1.2 18a3.5 3.5 0 0 1-7 0z" fill="currentColor" stroke="currentColor"/>',
+ steak:'<path d="M11 3c4 3 6 10 6 19l-1.5 1.5-1.5-1.5-1.5 1.5-1.5-1.5zM11 23v5"/><path d="M11 28v17" stroke-width="3.5"/>',
+ soup:'<circle cx="12" cy="11" r="8"/><path d="M12 19v26"/>',
+ dessert:'<ellipse cx="12" cy="11" rx="5.5" ry="8"/><path d="M12 19v26"/>',
+ tea:'<ellipse cx="12" cy="9" rx="4.5" ry="6"/><path d="M12 15v30"/>',
+ bb:'<path d="M11 6c5 1 6.5 9 4 17h-4zM11 23v22"/>',
+ hand:'<path d="M8 26V10M12 25V6M16 25V8M20 27V13M8 21l-3.5-3c-2 2 .5 6 2.5 10 2 5 3 9 3 13M20 27c0 6-1 10-2 14"/>'
+};
+const UKIND={'App fork':['fork',36],'Entrée fork':['efork',48],'App knife':['knife',36],'Entrée knife':['eknife',48],'Steak knife':['steak',48],'Soup spoon':['soup',38],'Dessert spoon':['dessert',36],'Teaspoon':['tea',28],'B&B knife':['bb',30]};
+const uIcon=(kind,h)=>`<svg viewBox="0 0 24 48" width="${h/2}" height="${h}" aria-hidden="true">${UT[kind]}</svg>`;
+const miseIcons=d=>`<div class="mise" role="img" aria-label="Mise: ${esc(miseText(d))}">${d.mise.length?d.mise.map(m=>`<span>${uIcon(...UKIND[m])}${esc(m)}</span>`).join(''):`<span>${uIcon('hand',36)}By hand</span>`}</div>`;
+
+/* ---------- menu ---------- */
+function termRows(keys){return keys.map(k=>{const g=G[k];return `<div class="say-row">${sayBtn(g.t,g.l,g.a)}<span class="w">${esc(g.t)}</span><span class="phon">${esc(g.p)}</span><span class="mean">${esc(g.m)}</span></div>`}).join('')}
+function pairLines(d){const a=ACTS[d.act];if(!d.pair)return '<dd>No pour listed with this bite.</dd>';
+  return `<dd><b>Std</b> ${esc(W[a.std].short)} <span class="phon">${GLASS[W[a.std].g]}</span><br><b>Res</b> ${esc(W[a.res].short)} <span class="phon">${GLASS[W[a.res].g]}</span><br><b>N/A</b> ${d.noNA?'None listed for this dish.':esc(a.na)}</dd>`}
+function renderMenu(){let h=`<div class="tools"><input type="search" id="q" placeholder="Search dishes, allergens, wines" aria-label="Search the menu" autocomplete="off"><p class="count" id="qcount" hidden></p><div class="seg" id="jump"><span class="lab">Jump to act</span>${ACTS.map((a,i)=>`<button data-jump="${i}" aria-label="Act ${a.n}, ${esc(a.t)}">${a.n}</button>`).join('')}</div></div>
+  <details class="conf"><summary><span data-conf></span></summary><p class="note" style="text-align:center;margin:0 0 14px">Everything starts as a draft. Mark a dish or wine confirmed once the kitchen or sommelier team agrees, and tick these questions off as you get answers.</p><div class="opts">${QS.map(q=>`<button class="opt" data-ver="${q[0]}" aria-pressed="false"><span>${esc(q[1])}</span><span class="tag">Open</span></button>`).join('')}</div></details>`;
+  ACTS.forEach((a,i)=>{
+    h+=`<section id="act-${i}"><div class="act"><p class="lab">Act ${a.n}</p><h2 class="caps">${esc(a.t)}</h2><p class="pour">${esc(a.pour)}</p><div class="bottles"><figure><img src="img/w-${a.std}.jpg" alt="${esc(W[a.std].short)}"><figcaption class="cap">Std · ${esc(W[a.std].short)}</figcaption></figure><figure><img src="img/w-${a.res}.jpg" alt="${esc(W[a.res].short)}"><figcaption class="cap">Res · ${esc(W[a.res].short)}</figcaption></figure></div></div>`;
+    D.filter(d=>d.act===i).forEach(d=>{
+      if(d.grp)h+=`<p class="group lab">${esc(d.grp)}</p>`;
+      h+=`<details class="dish" id="d-${d.id}" data-s="${esc([d.n,d.grp||'',a.t,d.al.join(' '),miseText(d),d.terms.map(k=>G[k].t).join(' '),d.pair?W[a.std].n+' '+W[a.res].n+' '+a.na:''].join(' ').toLowerCase())}"><summary><span class="thumb" data-th="${d.id}"></span><h3 class="caps">${esc(d.n)}</h3>${miseIcons(d)}<span class="vb" data-vb="${d.id}">Draft</span></summary><div class="body">
+        <div class="photo" data-ph="${d.id}" data-label="${esc(d.n)}"></div>
+        <p>${esc(d.d)}</p>
+        ${SEEN[d.id]?`<div class="sec"><span class="lab">From guest reviews · early 2026 menu</span><p class="note" style="font-size:16.5px">${esc(SEEN[d.id])} Confirm against tonight's plate.</p></div>`:''}
+        ${ING[d.id]?`<div class="sec"><span class="lab">On the plate · reference photos</span>${strip(ING[d.id])}</div>`:''}
+        <div class="sec"><span class="lab">Say it</span><div class="say-row">${sayBtn(d.n,'en',null)}<span class="w">${esc(d.n)}</span></div>${termRows(d.terms)}</div>
+        <dl class="kv"><dt>Mise</dt><dd>${esc(miseText(d))}</dd><dt>Pairing</dt>${pairLines(d)}</dl>
+        <div class="sec"><span class="lab">Allergies on the sheet</span><div class="chips">${d.al.map(x=>`<span class="chip">${esc(x)}</span>`).join('')}</div></div>
+        <div class="sec"><label class="lab" for="sp-${d.id}">Your spiel</label><textarea id="sp-${d.id}" data-sp="${d.id}">${esc(spiel(d))}</textarea>
+          <div class="row"><button class="btn" data-listen="${d.id}">Listen</button><button class="btn quiet" data-reset="${d.id}">Back to draft</button><span class="status" aria-live="polite"></span></div>
+          <p class="note">A draft written from the sheet. Rewrite it in the kitchen's words once you hear them; your changes save as you type.</p>
+          <div class="row">${verBtn(d.id)}<span class="note">Once the kitchen has confirmed this dish and spiel.</span></div></div>
+      </div></details>`});
+    h+='</section>'});
+  h+=`<section class="roomsec"><div class="act"><p class="lab">Where it happens</p><h2 class="caps">The Room</h2><p class="pour">Published photos of the main dining room and the bar.</p></div><div class="room"><figure><img src="img/r-dining_room_1.jpg" alt="Main dining room"><figcaption class="cap">Main dining room</figcaption></figure><figure><img src="img/r-dining_room_bar.jpg" alt="Bar"><figcaption class="cap">Bar</figcaption></figure></div></section>`;
+  view.innerHTML=h}
+
+/* ---------- pairings ---------- */
+function wineBlock(tier,k){const w=W[k];return `<div class="wine"><span class="lab">${tier} · ${esc(GLASS[w.g])}</span><h4>${esc(w.n)}</h4><div class="say-row">${sayBtn(w.short,w.l,w.a,w.short)}<span class="phon">${esc(w.p)}</span></div><div class="photo" data-ph="w-${k}" data-label="${esc(w.short)}"></div><p>${esc(w.what)}</p><p><i>${esc(w.why)}</i></p><div class="row">${verBtn('w-'+k)}<span class="note">Once the sommelier team has confirmed the bottle, vintage and pronunciation.</span></div></div>`}
+function renderPairings(){let h=`<div class="view-head"><p class="lab">Six pours</p><h2 class="caps">The Pairing</h2><p>Sparkling, crisp white, rich white, light red, bold red, sweet. Each pour is a little heavier than the last, matching the food as it grows richer.</p></div>`;
+  ACTS.forEach((a,i)=>{h+=`<section><div class="act"><p class="lab">Act ${a.n}</p><h2 class="caps">${esc(a.t)}</h2><p class="pour">${D.filter(d=>d.act===i&&d.pair).map(d=>esc(d.n.split(' with ')[0])).join(' · ')}</p></div>
+    ${wineBlock('Standard',a.std)}${wineBlock('Reserve',a.res)}
+    <div class="wine"><span class="lab">Non-alcoholic</span><h4>${esc(a.na)}</h4><p><i>${esc(a.naNote)}</i></p></div></section>`});
+  h+=`<section><div class="act"><p class="lab">In the non-alcoholic pours</p><h2 class="caps">Teas and Herbs</h2></div><div class="wine">${strip(['shiso','sencha','genmaicha','juniper_berries'])}</div></section>
+  <section><div class="act"><p class="lab">New this week</p><h2 class="caps">By the Glass</h2></div>${wineBlock('Chardonnay','larue')}</section>
+  <section><div class="act"><p class="lab">Why it works</p><h2 class="caps">Five Rules</h2></div><div class="wine"><p><b>Match weight.</b> Light dish, light wine; rich dish, rich wine.</p><p><b>Acid cuts richness.</b> Bright wines refresh the palate after butter, cream and fat.</p><p><b>Echo a flavor.</b> Condrieu smells of pear and meets the pear on the lobster.</p><p><b>Tannin needs protein and fat.</b> The grip of red wine softens against duck and venison.</p><p><b>Sweet wine at least as sweet as the dessert,</b> or the wine tastes sour.</p><p class="note">Non-alcoholic pours rebuild a wine without alcohol: grape for fruit and body, tea for aroma and grip, verjus or vinegar for acidity, agave for balance.</p></div></section>`;
+  view.innerHTML=h}
+
+/* ---------- flashcards ---------- */
+const DECKS={
+  Dishes:()=>D.map(d=>{const a=ACTS[d.act];return{f:d.n,b:`<div><b>Mise</b>${esc(miseText(d))}</div><div><b>Pour</b>${d.pair?esc(W[a.std].short)+' · '+esc(W[a.res].short):'None listed'}</div><div><b>Allergies</b>${esc(d.al.join(', '))}</div>`,say:[d.n,'en',null],ph:d.id,key:'d:'+d.id}}),
+  Wines:()=>Object.keys(W).map(k=>{const w=W[k];return{f:w.n,b:`<div><b>Say it</b>${esc(w.p)}</div><div><b>Glass</b>${esc(GLASS[w.g])}</div><div><b>What</b>${esc(w.what)}</div><div><b>Why</b>${esc(w.why)}</div>`,say:[w.short,w.l,w.a],ph:'w-'+k,key:'w:'+k}}),
+  Words:()=>Object.keys(G).map(k=>{const g=G[k];return{f:g.t,b:`<div><b>Say it</b>${esc(g.p)}</div><div><b>Means</b>${esc(g.m)}</div>`,say:[g.t,g.l,g.a],img:GIMG[k]?'img/i-'+GIMG[k]+'.jpg':null,key:'g:'+k}})
+};
+const IV=[0,1,3,7,16],DAY=864e5,SESSION=15;
+const allCards=()=>Object.keys(DECKS).flatMap(n=>DECKS[n]());
+const isDue=c=>{const r=ST.sr[c.key];return !r||r.due<=Date.now()};
+const srStats=()=>{const all=allCards();return{n:all.length,known:all.filter(c=>(ST.sr[c.key]||{}).box>=3).length,due:all.filter(isDue).length}};
+function order(cards){const seen=cards.filter(c=>ST.sr[c.key]).sort((x,y)=>ST.sr[x.key].box-ST.sr[y.key].box||ST.sr[x.key].due-ST.sr[y.key].due);return [...seen,...shuffle(cards.filter(c=>!ST.sr[c.key]))]}
+let FC={deck:'Today',cards:[],i:0,flip:false,started:false,right:0,miss:0};
+function fcLoad(deck,more){const pool=deck==='Today'?allCards():DECKS[deck]();let cards=order(pool.filter(isDue));
+  if(deck==='Today'){if(more&&!cards.length)cards=pool.slice().sort((x,y)=>ST.sr[x.key].due-ST.sr[y.key].due);cards=cards.slice(0,SESSION)}
+  else if(!cards.length||more)cards=order(pool);
+  FC={deck,cards,i:0,flip:false,started:true,right:0,miss:0}}
+function grade(know){const c=FC.cards[FC.i],r=ST.sr[c.key]||{box:0},now=Date.now();
+  if(know){const box=Math.min(r.box+1,4);ST.sr[c.key]={box,due:now+IV[box]*DAY,t:now};FC.right++}
+  else{ST.sr[c.key]={box:0,due:now,t:now};FC.miss++;FC.cards.push(c)}
+  queueSave();FC.i++;FC.flip=false;renderCards()}
+function renderCards(){if(!FC.started)fcLoad('Today');const st=srStats(),c=FC.cards[FC.i];
+  const head=`<div class="view-head"><p class="lab">Flashcards</p><h2 class="caps">${FC.deck==='Today'?'Today’s Session':FC.deck}</h2><p>Say the answer out loud, turn the card, then grade yourself. A missed card comes back today. A known card comes back in 1, 3, 7, then 16 days.</p></div>
+  <div class="seg">${['Today',...Object.keys(DECKS)].map(n=>`<button data-deck="${n}" aria-pressed="${n===FC.deck}">${n}</button>`).join('')}</div>
+  <p class="prog">Known well ${st.known} of ${st.n} · Due now ${st.due}</p>`;
+  const bind=()=>view.querySelectorAll('[data-deck]').forEach(b=>b.onclick=()=>{fcLoad(b.dataset.deck);renderCards()});
+  if(!c){const done=FC.right+FC.miss>0;view.innerHTML=head+`<div class="result">${done?`<b>Session complete.</b> ${FC.right} known, ${FC.miss} to see again.`:`<b>Nothing is due right now.</b>`}<br><span class="note">${st.due?`${st.due} more card${st.due===1?' is':'s are'} due.`:'Come back tomorrow for the next round.'}</span></div><div class="row center"><button class="btn solid" id="fc-more">${st.due?'Next session':'Study ahead'}</button></div>`;
+    $('#fc-more').onclick=()=>{fcLoad(FC.deck,true);renderCards()};bind();return}
+  view.innerHTML=head+`<button class="card" id="card" aria-label="Turn card">${FC.flip?`<div class="back">${c.b}</div>`:`${c.ph&&PH[c.ph]?`<img src="/_blob/${esc(PH[c.ph])}" alt="">`:c.ph&&c.ph.startsWith('w-')?`<img src="img/${c.ph}.jpg" alt="" style="object-fit:contain">`:c.img?`<img src="${c.img}" alt="">`:''}<div class="front caps">${esc(c.f)}</div><span class="lab">Tap to turn</span>`}</button>
+  <p class="count">${Math.min(FC.i+1,FC.cards.length)} of ${FC.cards.length}</p>
+  <div class="row center">${sayBtn(...c.say,c.f)}${FC.flip?'<button class="btn quiet" id="fc-again">Again</button><button class="btn solid" id="fc-know">Knew it</button>':'<button class="btn solid" id="fc-show">Show answer</button><button class="btn quiet" id="fc-skip">Skip</button>'}</div>`;
+  $('#card').onclick=()=>{FC.flip=!FC.flip;renderCards()};
+  if(FC.flip){$('#fc-again').onclick=()=>grade(false);$('#fc-know').onclick=()=>grade(true)}
+  else{$('#fc-show').onclick=()=>{FC.flip=true;renderCards()};$('#fc-skip').onclick=()=>{FC.i++;renderCards()}}
+  bind()}
+
+/* ---------- quiz ---------- */
+function pick(correct,pool){const others=shuffle([...new Set(pool)].filter(x=>x!==correct)).slice(0,3);return shuffle([correct,...others])}
+function makeQ(){const t=Math.floor(Math.random()*6),paired=D.filter(d=>d.pair),d=paired[Math.floor(Math.random()*paired.length)],a=ACTS[d.act];
+  if(t===0){const x=D[Math.floor(Math.random()*D.length)];return{q:`What do you set for the ${x.n}?`,a:miseText(x),o:pick(miseText(x),D.map(miseText))}}
+  if(t===1)return{q:`Standard pour with the ${d.n}?`,a:W[a.std].short,o:pick(W[a.std].short,ACTS.map(x=>W[x.std].short))};
+  if(t===2)return{q:`Reserve pour with the ${d.n}?`,a:W[a.res].short,o:pick(W[a.res].short,ACTS.map(x=>W[x.res].short))};
+  if(t===3){const ks=Object.keys(W),w=W[ks[Math.floor(Math.random()*ks.length)]];return{q:`Which glass for the ${w.short}?`,a:GLASS[w.g],o:pick(GLASS[w.g],Object.values(GLASS))}}
+  if(t===4){const [al,id]=UNIQ[Math.floor(Math.random()*UNIQ.length)],x=D.find(y=>y.id===id);return{q:`Which dish lists ${al}?`,a:x.n,o:pick(x.n,D.map(y=>y.n))}}
+  const ks=Object.keys(G),g=G[ks[Math.floor(Math.random()*ks.length)]];return{q:`What is ${g.t.toLowerCase()==='mise en place'?'mise en place':g.t}?`,a:g.m,o:pick(g.m,ks.map(k=>G[k].m))}}
+let QZ=null;
+function newQuiz(){const qs=[],seen=new Set();let guard=0;while(qs.length<10&&guard++<200){const q=makeQ();if(!seen.has(q.q)){seen.add(q.q);qs.push(q)}}QZ={qs,i:0,score:0,chosen:null}}
+function renderQuizInner(){if(!QZ)newQuiz();
+  if(QZ.i>=QZ.qs.length){view.innerHTML=`<div class="view-head"><p class="lab">Round complete</p><p class="big">${QZ.score}/${QZ.qs.length}</p><p style="margin-top:14px">${QZ.score===QZ.qs.length?'A clean round.':QZ.score>=7?'Close. Run it again and the gaps will show.':'Open the menu, review the acts, then try again.'}</p></div><div class="row center"><button class="btn solid" id="qz-new">New round</button></div>`;$('#qz-new').onclick=()=>{newQuiz();renderQuiz()};return}
+  const q=QZ.qs[QZ.i],done=QZ.chosen!==null;
+  view.innerHTML=`<div class="view-head"><p class="lab">Question ${QZ.i+1} of ${QZ.qs.length} · Score ${QZ.score}</p></div><p class="q">${esc(q.q)}</p>
+  <div class="opts">${q.o.map((o,k)=>{let cls='',tag='';if(done){if(o===q.a){cls=' right';tag='Correct'}else if(k===QZ.chosen){cls=' wrong';tag='Your answer'}}return `<button class="opt${cls}" data-k="${k}" ${done?'disabled':''}><span>${esc(o)}</span><span class="tag">${tag}</span></button>`}).join('')}</div>
+  ${done?`<div class="row center" style="margin-top:22px"><button class="btn solid" id="qz-next">${QZ.i===QZ.qs.length-1?'See score':'Next'}</button></div>`:''}`;
+  view.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{QZ.chosen=+b.dataset.k;if(q.o[QZ.chosen]===q.a)QZ.score++;renderQuiz()});
+  const n=$('#qz-next');if(n)n.onclick=()=>{QZ.i++;QZ.chosen=null;renderQuiz();window.scrollTo(0,0)}}
+
+/* ---------- practice: speak it, run the table ---------- */
+let PR={mode:'speak'},SPK=null,RUN=null;
+const pickOne=a=>a[Math.floor(Math.random()*a.length)];
+function srGrade(key,know){const r=ST.sr[key]||{box:0},now=Date.now();if(know){const box=Math.min(r.box+1,4);ST.sr[key]={box,due:now+IV[box]*DAY,t:now}}else ST.sr[key]={box:0,due:now,t:now};queueSave()}
+function spkLoad(){SPK={q:order(DECKS.Dishes()).map(c=>c.key.slice(2)).slice(0,6),i:0,reveal:false,right:0,miss:0}}
+function renderSpeak(){if(!SPK)spkLoad();const d=D.find(x=>x.id===SPK.q[SPK.i]);
+  if(!d){view.innerHTML=`<div class="view-head"><p class="lab">Round complete</p><p class="big">${SPK.right}/${SPK.right+SPK.miss}</p><p style="margin-top:14px">Dishes you missed come back first in the next round and in today's flashcards.</p></div><div class="row center"><button class="btn solid" id="sp-new">Next six dishes</button></div>`;$('#sp-new').onclick=()=>{spkLoad();renderQuiz()};return}
+  view.innerHTML=`<div class="view-head"><p class="lab">Speak it · dish ${SPK.i+1} of ${SPK.q.length}</p><h2 class="caps">${esc(d.n)}</h2>${SPK.reveal?'':'<p>You are at the table and the plate has just landed. Say all four out loud, then reveal.</p>'}</div>`+(SPK.reveal?
+    `<div class="body"><div class="sec"><span class="lab">Your spiel</span><div class="say-row" style="flex-wrap:nowrap;align-items:flex-start">${sayBtn(spiel(d),'en',null,'your spiel')}<p style="margin:0;min-width:0">${esc(spiel(d))}</p></div></div>${miseIcons(d)}<dl class="kv"><dt>Pairing</dt>${pairLines(d)}</dl><div class="sec"><span class="lab">Allergies on the sheet</span><div class="chips">${d.al.map(x=>`<span class="chip">${esc(x)}</span>`).join('')}</div></div></div><div class="row center" style="margin-top:8px"><button class="btn quiet" id="sp-miss">Missed something</button><button class="btn solid" id="sp-ok">Nailed it</button></div>`
+    :`<ol class="say-list"><li>The spiel</li><li>The mise you set</li><li>The standard and reserve pour, and the glass</li><li>The allergens you would flag</li></ol><div class="row center"><button class="btn solid" id="sp-rev">Reveal</button></div>`);
+  if(SPK.reveal){const g=k=>()=>{srGrade('d:'+d.id,k);k?SPK.right++:SPK.miss++;SPK.i++;SPK.reveal=false;renderQuiz();window.scrollTo(0,0)};$('#sp-miss').onclick=g(false);$('#sp-ok').onclick=g(true)}
+  else $('#sp-rev').onclick=()=>{SPK.reveal=true;renderQuiz()}}
+function runSteps(){const c=RUN.path[RUN.i],p=RUN.path[RUN.i-1],st=[];if(RUN.i>0)st.push('next');st.push('mise');if(c.pair&&(!p||!p.pair||p.act!==c.act))st.push('pour');return st}
+function runQ(){const c=RUN.path[RUN.i],p=RUN.path[RUN.i-1],kind=runSteps()[RUN.step],t=RUN.tier;let q,a,o;
+  if(kind==='next'){q=`You just cleared the ${p.n}. What comes next?`;a=c.n;o=pick(a,RUN.path.map(x=>x.n).filter(n=>n!==p.n))}
+  else if(kind==='mise'){q=RUN.i?`${c.n} is next. What do you set?`:`The table is seated and the ${c.n} arrives first. What do you set?`;a=miseText(c);o=pick(a,D.map(miseText))}
+  else{const lab=x=>{const y=W[x[t]];return `${y.short} · ${GLASS[y.g]}`};q=`${t==='std'?'Standard':'Reserve'} pairing. What do you pour with the ${c.n}, and in which glass?`;a=lab(ACTS[c.act]);o=pick(a,ACTS.map(lab))}
+  RUN.cur={q,a,o,kind};RUN.chosen=null}
+function runLoad(){const g=id=>D.find(d=>d.id===id),farm={id:null,n:'Magic Farm Celebration (three bites)',mise:[],act:0,pair:0};
+  RUN={path:[g('cookie'),farm,g('dumpling'),g('bread'),g(pickOne(['crab','scallop','greens'])),g(pickOne(['lobster','snapper','rice'])),g('squash'),g(pickOne(['duck','venison','tamale'])),g('mochi'),g(pickOne(['doughnut','coffee']))],tier:pickOne(['std','res']),i:0,step:0,score:0,total:0};runQ()}
+function renderRun(){if(!RUN)runLoad();const P=RUN.path;
+  if(RUN.i>=P.length){view.innerHTML=`<div class="view-head"><p class="lab">Table complete</p><p class="big">${RUN.score}/${RUN.total}</p><p style="margin-top:14px">${RUN.score===RUN.total?'A clean table.':'The dishes you slipped on are back in today’s flashcards.'}</p></div><div class="row center"><button class="btn solid" id="run-new">Run another table</button></div>`;$('#run-new').onclick=()=>{runLoad();renderQuiz()};return}
+  const q=RUN.cur,done=RUN.chosen!==null,short=x=>x.n.split(' with ')[0];
+  view.innerHTML=`<div class="view-head"><p class="lab">Run the table · course ${RUN.i+1} of ${P.length} · score ${RUN.score}</p></div><p class="guest">Tonight’s guest chose ${[P[4],P[5],P[7],P[9]].map(short).join(', ')}. ${RUN.tier==='std'?'Standard':'Reserve'} pairing.</p><p class="q">${esc(q.q)}</p>
+  <div class="opts">${q.o.map((o,k)=>{let cls='',tag='';if(done){if(o===q.a){cls=' right';tag='Correct'}else if(k===RUN.chosen){cls=' wrong';tag='Your answer'}}return `<button class="opt${cls}" data-k="${k}" ${done?'disabled':''}><span>${esc(o)}</span><span class="tag">${tag}</span></button>`}).join('')}</div>
+  ${done?'<div class="row center" style="margin-top:22px"><button class="btn solid" id="run-next">Next</button></div>':''}`;
+  view.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{RUN.chosen=+b.dataset.k;RUN.total++;const c=P[RUN.i];if(q.o[RUN.chosen]===q.a)RUN.score++;else if(c.id)srGrade('d:'+c.id,false);renderQuiz()});
+  const n=$('#run-next');if(n)n.onclick=()=>{RUN.step++;if(RUN.step>=runSteps().length){RUN.i++;RUN.step=0}if(RUN.i<P.length)runQ();renderQuiz();window.scrollTo(0,0)}}
+function renderQuiz(){if(PR.mode==='speak')renderSpeak();else if(PR.mode==='run')renderRun();else renderQuizInner();
+  view.insertAdjacentHTML('afterbegin',`<div class="seg" style="margin:22px 0 0">${[['speak','Speak it'],['run','Run the table'],['quiz','Quiz']].map(m=>`<button data-pr="${m[0]}" aria-pressed="${m[0]===PR.mode}">${m[1]}</button>`).join('')}</div>`);
+  view.querySelectorAll('[data-pr]').forEach(b=>b.onclick=()=>{PR.mode=b.dataset.pr;renderQuiz()})}
+
+/* ---------- allergy drill ---------- */
+let AL={key:'Tree nuts',picked:new Set(),checked:false};
+function renderDrill(){const k=AL.key,truth=D.filter(d=>has(d,k)).map(d=>d.id);
+  let res='';if(AL.checked){const hit=truth.filter(id=>AL.picked.has(id)).length,extra=[...AL.picked].filter(id=>!truth.includes(id)).length;
+    res=`<div class="result"><b>${hit} of ${truth.length} found</b>${extra?`, ${extra} picked that do not list it`:''}.${NA_AL[k]?`<br><span class="note">${esc(NA_AL[k])}</span>`:''}</div>`}
+  view.innerHTML=`<div class="view-head"><p class="lab">Allergy drill</p><h2 class="caps">${esc(k)}</h2><p>A guest tells you about this allergy. Tap every dish that lists it, then check.</p></div>
+  <div class="seg">${AKEYS.map(a=>`<button data-al="${a}" aria-pressed="${a===k}">${a}</button>`).join('')}</div>
+  <div class="opts">${D.map(d=>{let cls='',tag='';const on=AL.picked.has(d.id),is=truth.includes(d.id);if(AL.checked){if(is&&on){cls=' right';tag='Correct'}else if(is){cls=' wrong';tag='Missed'}else if(on){cls=' wrong';tag='Not listed'}}
+    return `<button class="opt${cls}" data-d="${d.id}" aria-pressed="${on}" ${AL.checked?'disabled':''}><span>${esc(d.n)}</span><span class="tag">${tag}</span></button>`}).join('')}</div>
+  ${res}<div class="row center" style="margin-top:22px">${AL.checked?'<button class="btn solid" id="al-next">Another allergy</button><button class="btn quiet" id="al-again">Try again</button>':'<button class="btn solid" id="al-check">Check</button>'}</div>`;
+  view.querySelectorAll('[data-al]').forEach(b=>b.onclick=()=>{AL={key:b.dataset.al,picked:new Set(),checked:false};renderAllergies()});
+  view.querySelectorAll('[data-d]').forEach(b=>b.onclick=()=>{const id=b.dataset.d;AL.picked.has(id)?AL.picked.delete(id):AL.picked.add(id);b.setAttribute('aria-pressed',AL.picked.has(id))});
+  const c=$('#al-check');if(c)c.onclick=()=>{AL.checked=true;renderAllergies()};
+  const n=$('#al-next');if(n)n.onclick=()=>{const rest=AKEYS.filter(a=>a!==k);AL={key:rest[Math.floor(Math.random()*rest.length)],picked:new Set(),checked:false};renderAllergies();window.scrollTo(0,0)};
+  const g=$('#al-again');if(g)g.onclick=()=>{AL={key:k,picked:new Set(),checked:false};renderAllergies()}}
+
+/* ---------- allergy matrix ---------- */
+const baseAl=x=>x.replace(/ \(.*\)$/,'');
+const MXCOLS=[...AKEYS,...[...new Set(D.flatMap(d=>d.al.map(baseAl)))].filter(x=>!AKEYS.includes(x)).sort()];
+const shortName=d=>d.n.split(' with ')[0].replace(' Poached','').replace(' Salad','');
+let AV={mode:'matrix',sel:new Set()};
+function renderMatrix(){const sel=[...AV.sel],hit=d=>sel.some(k=>has(d,k));
+  let rows='';ACTS.forEach((a,i)=>{rows+=`<tr class="acth"><th class="rowh" scope="rowgroup">Act ${a.n} · ${esc(a.t)}</th><td colspan="${MXCOLS.length}"></td></tr>`;
+    D.filter(d=>d.act===i).forEach(d=>{rows+=`<tr class="${hit(d)?'hit':''}"><th class="rowh" scope="row">${esc(shortName(d))}</th>${MXCOLS.map(k=>`<td class="${has(d,k)?'on':''}${AV.sel.has(k)?' sel':''}"${has(d,k)?` aria-label="${esc(k)}"`:''}></td>`).join('')}</tr>`})});
+  let sum='';if(sel.length){const groups=[[1,'Act II'],[2,'Act III'],[4,'Act V'],[5,'Dessert']];const fixed=D.filter(d=>[0,3].includes(d.act)||d.id==='mochi').filter(hit);
+    sum=`<div class="safe"><p><b>Guest avoids</b>${esc(sel.join(', '))}</p>${fixed.length?`<p class="no"><b>Set courses affected</b>${fixed.map(d=>esc(shortName(d))).join(', ')}</p>`:'<p><b>Set courses</b>None affected</p>'}${groups.map(([act,lab])=>{const ds=D.filter(d=>d.act===act&&d.id!=='mochi'),ok=ds.filter(d=>!hit(d));return `<p${ok.length?'':' class="no"'}><b>${lab}</b>${ok.length?'Clear: '+ok.map(d=>esc(shortName(d))).join(', '):'No plate is clear. Ask the kitchen.'}</p>`}).join('')}${sel.filter(k=>NA_AL[k]).map(k=>`<p class="note">${esc(NA_AL[k])}</p>`).join('')}<div class="row"><button class="btn quiet" id="mx-clear">Clear</button></div></div>`}
+  view.innerHTML=`<div class="view-head"><p class="lab">Allergy matrix</p><h2 class="caps">Every Dish, Every Allergen</h2><p>A dot means the sheet lists it. Tap one or more allergens to strike the dishes a guest must avoid and see what is clear. Scroll sideways for more.</p></div>
+  <div class="mx-wrap"><table class="mx"><thead><tr><th class="rowh" scope="col"></th>${MXCOLS.map(k=>`<th class="col${AV.sel.has(k)?' sel':''}" scope="col"><button data-mx="${esc(k)}" aria-pressed="${AV.sel.has(k)}">${esc(k)}</button></th>`).join('')}</tr></thead><tbody>${rows}</tbody></table></div>${sum}`;
+  const keep=view.querySelector('.mx-wrap');
+  view.querySelectorAll('[data-mx]').forEach(b=>b.onclick=()=>{const x=keep.scrollLeft,k=b.dataset.mx;AV.sel.has(k)?AV.sel.delete(k):AV.sel.add(k);renderAllergies();const w=view.querySelector('.mx-wrap');if(w)w.scrollLeft=x});
+  const c=$('#mx-clear');if(c)c.onclick=()=>{AV.sel.clear();renderAllergies()}}
+function renderAllergies(){if(AV.mode==='drill')renderDrill();else renderMatrix();
+  view.insertAdjacentHTML('afterbegin',`<div class="seg" style="margin:22px 0 0">${[['matrix','Matrix'],['drill','Drill']].map(m=>`<button data-av="${m[0]}" aria-pressed="${m[0]===AV.mode}">${m[1]}</button>`).join('')}</div>`);
+  view.querySelectorAll('[data-av]').forEach(b=>b.onclick=()=>{AV.mode=b.dataset.av;renderAllergies()})}
+
+/* ---------- routing ---------- */
+const VIEWS={menu:renderMenu,pairings:renderPairings,cards:renderCards,quiz:renderQuiz,allergies:renderAllergies};
+function route(){const v=VIEWS[location.hash.slice(1)]?location.hash.slice(1):'menu';SAY.length=0;view.classList.remove('searching');VIEWS[v]();document.querySelectorAll('#tabs button').forEach(b=>b.dataset.v===v?b.setAttribute('aria-current','page'):b.removeAttribute('aria-current'))}
+$('#tabs').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(location.hash.slice(1)===b.dataset.v)return;location.hash=b.dataset.v;window.scrollTo(0,0)});
+window.addEventListener('hashchange',route);
+route();
+</script>
+
+</body>
+</html>
